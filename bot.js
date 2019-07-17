@@ -34,7 +34,7 @@ client.user.setGame(`-bc`)
 
 
 
-lient.on('message', message => {
+client.on('message', message => {
   if(message.content.startsWith(prefix + 'bc')) {
   let args = message.content.split(" ").slice(1).join(" ");
   if(!args) return message.channel.send(`**:rolling_eyes: please type the broadcast message**`)
