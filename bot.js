@@ -33,7 +33,7 @@ client.on('ready', () => {
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-client.user.setGame(`By : 7ámø{-bc -help}`)
+client.user.setGame(`By : 7ámø {Malicious.}{-bc -help}`)
   console.log('')
   console.log('')
   console.log('╔[═════════════════════════════════════════════════════════════════]╗')
