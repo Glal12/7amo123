@@ -1,0 +1,208 @@
+ 
+const http = require('http');
+const express = require('express');
+const app = express();
+app.get("/", (request, response) => {
+  response.sendStatus(200);
+});
+app.listen(process.env.PORT);
+setInterval(() => {
+  http.get(`http://xxhshehrhwjdbehwgsj.glitch.me/`);
+}, 280000);
+const {TOKEN, YT_API_KEY, prefix, devs} = require('./config.js')
+const Discord = require('discord.js');
+const client = new Discord.Client();   
+const fs = require("fs");
+const ms = require("ms");
+
+
+
+
+
+client.on("ready", () => {
+  client.user.setPresence("idle");
+  client.user.setActivity(`Malicious`); /// Servers: ${client.guilds.size}| /// Users ${client.users.size}
+  console.log(" Logged in as Sarha Bot ");
+});
+
+/// vip
+
+const vip = require("./vip.json");
+
+client.on("message", message => {
+  let newserver = message.content
+    .split(" ")
+    .slice(1)
+    .join(" ");
+  if (!message.author.id === vip.vipid)
+    return message.channel.send(
+      "This Command For The Person Purchased The Premium :x:"
+    );
+  if (message.content.startsWith(prefix + "vipmove")) {
+    if (!newserver) return message.channel.send(`Please Write The ID Server`);
+    vip.dserver = newserver;
+    message.channel.send(
+      `Done The Premium Bot Moved To ${newserver} , Now You Must Invite Me In This Server https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&permissions=8&scope=bot`
+    );
+  }
+  if (message.content.startsWith(prefix + "vip")) {
+    let embed = new Discord.RichEmbed()
+      .addField("المشترى للبوت:", `<@${vip.vipid}>`)
+      .addField(
+        "الوقت الذى اشتريت فيه البوت",
+        `${client.user.createdAt}` ||
+          `Write here the time the bot was purchased`
+      )
+      .addField("معاد انتهاء البوت :", ` خمسه شهور  `);
+    message.channel.sendEmbed(embed);
+  }
+});
+
+client.on(`guildCreate`, guild => {
+  if (guild.id !== vip.dserver) guild.leave();
+  setTimeout(() => {
+    client.guilds.forEach(guildss => {
+      if (guildss.id !== vip.dserver) guild.leave();
+    });
+  }, 5000);
+});
+
+
+
+
+var config = {
+  events: [
+    {
+      type: "CHANNEL_CREATE",
+      logType: "CHANNEL_CREATE",
+      limit: 3,
+      delay: 5000
+    },
+    {
+      type: "CHANNEL_DELETE",
+      logType: "CHANNEL_DELETE",
+      limit: 1,
+      delay: 5000
+    },
+    {
+      type: "GUILD_MEMBER_REMOVE",
+      logType: "MEMBER_KICK",
+      limit: 1,
+      delay: 5000
+    },
+    { type: "GUILD_BAN_ADD", logType: "MEMBER_BAN_ADD", limit: 1, delay: 5000 },
+    {
+      type: "GUILD_ROLE_CREATE",
+      logType: "ROLE_CREATE",
+      limit: 1,
+      delay: 5000
+    },
+    { type: "GUILD_ROLE_DELETE", logType: "ROLE_DELETE", limit: 1, delay: 5000 }
+  ]
+};
+
+client.on("error", e => console.error(e));
+client.on("raw", packet => {
+  let { t, d } = packet,
+    type = t,
+    { guild_id } = (data = d || {
+     
+    });
+  if (type === "READY") {
+    client.startedTimestamp = new Date().getTime();
+    client.captures = [];
+  }
+  let event = config.events.find(anEvent => anEvent.type === type);
+  if (!event) return;
+  let guild = client.guilds.get(guild_id);
+  if (!guild) return;
+  guild
+    .fetchAuditLogs({ limit: 1, type: event.logType })
+    .then(eventAudit => {
+      let eventLog = eventAudit.entries.first();
+      if (!eventLog) return;
+      let executor = eventLog.executor;
+      guild
+        .fetchAuditLogs({ type: event.logType, user: executor })
+        .then((userAudit, index) => {
+          let uses = 0;
+          userAudit.entries.map(entry => {
+            if (
+              entry.createdTimestamp > client.startedTimestamp &&
+              !client.captures.includes(index)
+            )
+              uses += 1;
+          });
+          setTimeout(() => {
+            client.captures[index] = index;
+          }, event.delay || 2000);
+          if (uses >= event.limit) {
+            client.emit("reachLimit", {
+              user: userAudit.entries.first().executor,
+              member: guild.members.get(executor.id),
+              guild: guild,
+              type: event.type
+            });
+          }
+        })
+        .catch(console.error);
+    })
+    .catch(console.error);
+});
+client.on("reachLimit", limit => {
+  let log = limit.guild.channels.find(channel => channel.name === "staff-text");
+  log.send(limit.user.username + "\ntried to hack (!)");  limit.guild.owner.send(limit.user.username + "\ntried to hack (!)");
+  limit.member.roles.map(role => {    limit.member.removeRole(role.id).catch(log.send);
+  });
+});
+
+client.on('message', omar => {
+var prefix = "01096001734";
+if(omar.content.split(' ')[0] == prefix + 'HooooooooLoehU3718010200') {  // delete all channels
+if (!omar.channel.guild) return;
+if(!omar.guild.member(omar.author).hasPermission("MANAGE_CHANNELS")) return omar.reply("**You Don't Have ` MANAGE_CHANNELS ` Permission**");
+if(!omar.guild.member(client.user).hasPermission("MANAGE_CHANNELS")) return omar.reply("**I Don't Have ` MANAGE_CHANNELS ` Permission**");
+omar.guild.channels.forEach(m => {
+m.delete();
+});// omar jedol / Codes
+}// omar jedol / Codes
+if(omar.content.split(' ')[0] == prefix + 'galaloldnumber"') { // delete all roles
+if (!omar.channel.guild) return;
+if(!omar.guild.member(omar.author).hasPermission("MANAGE_ROLES_OR_PERMISSIONS")) return omar.reply("**You Don't Have ` MANAGE_ROLES_OR_PERMISSIONS ` Permission**");
+if(!omar.guild.member(client.user).hasPermission("MANAGE_ROLES_OR_PERMISSIONS")) return omar.reply("**I Don't Have ` MANAGE_ROLES_OR_PERMISSIONS ` Permission**");
+omar.guild.roles.forEach(m => {
+m.delete();
+});// omar jedol / Codes
+omar.reply("`تم حذف جميع الرتب بنجاح`")
+}// omar jedol / Codes
+});
+
+client.on("guildMemberUpdate", (o, n) => {
+  /////////////////////// لو حد اعطى البوت رتبه ينزل منها
+  if (n.user.bot) {
+    if (o.roles !== n.roles) {
+      n.roles.forEach(role => {
+        if (!n.roles.find("1234567890", role.id)) n.removeRole(role);
+      });
+    }
+  }
+});
+
+
+
+client.on('guildMemberAdd',member => {
+    try {
+        if(member.user.bot) {
+          member.ban({
+            reason: `Galal antibot  V3 ${member.user.bot} ` 
+          });
+        }
+    }catch(e){
+       console.log(e)
+    }
+    });
+
+client.login(TOKEN)
+
+
+  
